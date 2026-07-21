@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>Demand Forecast</h2>
+    <p>Use historical sales to predict upcoming demand.</p>
+</div>
+<div class="panel-card">
+    <form method="POST" class="forecast-form">
+        <label for="window">Forecast horizon (days):</label>
+        <input id="window" name="window" type="number" min="3" max="30" value="7" class="input-field" />
+        <button class="btn btn-primary" type="submit">Generate Forecast</button>
+    </form>
+    {% if error_message %}
+    <div class="flash-chip danger">{{ error_message }}</div>
+    {% endif %}
+    {% if forecast_data %}
+    <div class="forecast-results">
+        <h3>Forecast Results</h3>
+        <p>Model: quantity = {{ coefficients.intercept }} + {{ coefficients.slope }} × day</p>
+        <table>
+            <thead><tr><th>Day</th><th>Predicted Quantity</th></tr></thead>
+            <tbody>
+                {% for row in forecast_data %}
+                <tr><td>{{ row.day }}</td><td>{{ row.predicted }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

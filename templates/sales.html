@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>Sales Recording</h2>
+    <p>Capture transactions and update stock automatically.</p>
+</div>
+<div class="flex-grid">
+    <div class="form-panel">
+        <div class="panel-card">
+            <h3>Record a Sale</h3>
+            <form method="POST" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="input-group">
+                    {{ form.medicine_id.label }}
+                    {{ form.medicine_id(class='input-field') }}
+                </div>
+                <div class="input-group">
+                    {{ form.quantity.label }}
+                    {{ form.quantity(class='input-field') }}
+                </div>
+                {{ form.submit(class='btn btn-primary btn-block') }}
+            </form>
+        </div>
+    </div>
+    <div class="table-panel">
+        <div class="panel-card">
+            <h3>Recent Sales</h3>
+            <table>
+                <thead>
+                    <tr><th>Date</th><th>Medicine</th><th>Qty</th><th>Total (₹)</th></tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.sold_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ sale.medicine.name }}</td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>₹{{ '{:.2f}'.format(sale.total) }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4">No sales recorded yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacy Management</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% macro render_content_area() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-grid">
+                    {% for category, message in messages %}
+                        <div class="flash-chip {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    {% endmacro %}
+
+    {% if current_user.is_authenticated %}
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">PH</div>
+                <div>
+                    <h1>Pharmacy</h1>
+                    <p>Management Suite</p>
+                </div>
+            </div>
+            <nav>
+                <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                <a href="{{ url_for('inventory') }}" class="nav-link">Inventory</a>
+                <a href="{{ url_for('sales') }}" class="nav-link">Sales</a>
+                <a href="{{ url_for('reports') }}" class="nav-link">Reports</a>
+                <a href="{{ url_for('analytics') }}" class="nav-link">Analytics</a>
+                <a href="{{ url_for('forecast') }}" class="nav-link">Forecast</a>
+                <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+                <a href="{{ url_for('logout') }}" class="nav-link sign-out">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h2>Welcome, {{ current_user.username }}</h2>
+                    <p>Manage inventory, track sales, and forecast demand in real time.</p>
+                </div>
+                <button id="toggleTheme" class="btn btn-clear">Toggle Theme</button>
+            </header>
+            <section class="page-content">
+                {{ render_content_area() }}
+            </section>
+        </main>
+    </div>
+    {% else %}
+    <div class="page-auth auth-bg">
+        <section class="page-content">
+            {{ render_content_area() }}
+        </section>
+    </div>
+    {% endif %}
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>📊 Analytics Dashboard</h2>
+    <p>Real-time sales trends and inventory insights.</p>
+</div>
+
+<div class="analytics-container">
+    <div class="chart-wrapper">
+        <h3><span class="pharmacy-icon">💊</span>Top Categories by Sales</h3>
+        <canvas id="categorySalesChart" style="height:280px;"></canvas>
+        <ul class="insight-list" style="margin-top:18px;">
+            {% for category, sold in top_categories %}
+            <li><strong>{{ category }}</strong><span style="color:var(--accent-2);">📈 {{ sold }} units</span></li>
+            {% else %}
+            <li style="text-align:center;color:var(--muted);">No category sales data available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="chart-wrapper">
+        <h3><span class="pharmacy-icon">📦</span>Stock by Category</h3>
+        <canvas id="stockChart" style="height:280px;"></canvas>
+        <ul class="insight-list" style="margin-top:18px;">
+            {% for category, stock in stock_composition %}
+            <li><strong>{{ category }}</strong><span style="color:var(--success);">✓ {{ stock }} units</span></li>
+            {% else %}
+            <li style="text-align:center;color:var(--muted);">No stock data available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="chart-wrapper">
+        <h3><span class="pharmacy-icon">💹</span>Sales Trend Line</h3>
+        <canvas id="salesTrendChart" style="height:280px;"></canvas>
+    </div>
+    
+    <div class="chart-wrapper">
+        <h3><span class="pharmacy-icon">🎯</span>Inventory Health</h3>
+        <canvas id="healthChart" style="height:280px;"></canvas>
+    </div>
+</div>
+
+<script>
+const categorySales = {{ top_categories|map(attribute=1)|list|tojson }};
+const categoryLabels = {{ top_categories|map(attribute=0)|list|tojson }};
+const stockValues = {{ stock_composition|map(attribute=1)|list|tojson }};
+const stockLabels = {{ stock_composition|map(attribute=0)|list|tojson }};
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>Inventory Management</h2>
+    <p>Add medicines and monitor stock levels.</p>
+</div>
+<div class="flex-grid">
+    <div class="form-panel">
+        <div class="panel-card">
+            <h3>Add New Medicine</h3>
+            <form method="POST" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="input-group">
+                    {{ form.name.label }}
+                    {{ form.name(class='input-field') }}
+                </div>
+                <div class="input-group">
+                    {{ form.category.label }}
+                    {{ form.category(class='input-field') }}
+                </div>
+                <div class="input-row">
+                    <div class="input-half">
+                        {{ form.quantity.label }}
+                        {{ form.quantity(class='input-field') }}
+                    </div>
+                    <div class="input-half">
+                        {{ form.price.label }}
+                        {{ form.price(class='input-field') }}
+                    </div>
+                </div>
+                <div class="input-group">
+                    {{ form.description.label }}
+                    {{ form.description(class='input-field textarea-field') }}
+                </div>
+                <div class="input-group">
+                    {{ form.uses.label }}
+                    {{ form.uses(class='input-field textarea-field') }}
+                </div>
+                <div class="input-group">
+                    {{ form.image_url.label }}
+                    {{ form.image_url(class='input-field', placeholder='https://example.com/image.jpg') }}
+                </div>
+                {{ form.submit(class='btn btn-primary btn-block') }}
+            </form>
+        </div>
+    </div>
+    <div class="table-panel">
+        <div class="panel-card">
+            <h3>Current Inventory</h3>
+            <table>
+                <thead>
+                    <tr><th>Name</th><th>Category</th><th>Qty</th><th>Price</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ '{:.2f}'.format(item.price) }}</td>
+                        <td><a class="btn btn-ghost" href="{{ url_for('delete_inventory', item_id=item.id) }}">Delete</a></td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No inventory available yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

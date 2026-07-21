@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-auth auth-bg">
+    <div class="floatingPill" style="width:120px;height:120px;background:#6c8cff;top:15%;left:10%;"></div>
+    <div class="floatingPill" style="width:80px;height:80px;background:#22d3ee;top:60%;right:8%;"></div>
+    <div class="floatingPill" style="width:100px;height:100px;background:#ff5c7a;bottom:20%;left:5%;animation-delay:2s;"></div>
+    
+    <div class="auth-card animated-card">
+        <div class="pharmacy-badge">
+            <p style="font-size:0.85rem; margin:0; margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; color:var(--accent);">Pharmacy Management</p>
+        </div>
+        
+        <h1 style="background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:6px;">Secure Access</h1>
+        <p style="text-align:center;font-size:1rem;margin-bottom:28px;font-weight:500;">Welcome to your pharmacy dashboard</p>
+        
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>👤</span>
+                    {{ form.username.label }}
+                </label>
+                {{ form.username(class='input-field', placeholder='Enter your username') }}
+            </div>
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>🔐</span>
+                    {{ form.password.label }}
+                </label>
+                {{ form.password(class='input-field', placeholder='Enter your password') }}
+            </div>
+            
+            {{ form.submit(class='btn btn-primary btn-block', style='margin-top:20px;font-size:1.1rem;padding:16px;letter-spacing:0.5px;') }}
+        </form>
+        
+        <p class="small-text" style="margin-top:24px;">
+            New to the system? <a href="{{ url_for('register') }}" style="color:var(--accent-2);text-decoration:none;font-weight:600;transition:all .3s ease;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Register now</a>
+        </p>
+        
+        <div style="margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-size:0.85rem;color:var(--muted);text-align:center;">
+            <p style="margin:0;">💡 Demo: admin / admin123</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const card = document.querySelector('.auth-card');
+        const inputs = document.querySelectorAll('.input-field');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function(){
+                this.style.background = 'rgba(15, 23, 45, 0.95)';
+                this.style.borderColor = 'rgba(108, 140, 255, 0.6)';
+            });
+            input.addEventListener('blur', function(){
+                this.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                this.style.background = 'rgba(255, 255, 255, 0.04)';
+            });
+        });
+    });
+</script>
+{% endblock %}

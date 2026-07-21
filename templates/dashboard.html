@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid-grid">
+    <section class="stats-grid">
+        <article class="stat-card glow-card">
+            <h3>Total Medicines</h3>
+            <span>{{ medicines }}</span>
+        </article>
+        <article class="stat-card glow-card">
+            <h3>Total Stock</h3>
+            <span>{{ total_stock }}</span>
+        </article>
+        <article class="stat-card glow-card">
+            <h3>Sales Logged</h3>
+            <span>{{ total_sales }}</span>
+        </article>
+        <article class="stat-card glow-card">
+            <h3>Revenue (₹)</h3>
+            <span>₹{{ '{:.2f}'.format(revenue) }}</span>
+        </article>
+    </section>
+    <section class="chart-panel">
+        <div class="panel-card">
+            <h3>Top Medicines</h3>
+            <ul class="top-list">
+                {% for name, sold in top_medicines %}
+                <li><strong>{{ name }}</strong><span>{{ sold }} sold</span></li>
+                {% else %}
+                <li>No sales data yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="panel-card">
+            <h3>Quick Actions</h3>
+            <div class="action-grid">
+                <a class="action-card" href="{{ url_for('inventory') }}">Add Inventory</a>
+                <a class="action-card" href="{{ url_for('sales') }}">Record Sale</a>
+                <a class="action-card" href="{{ url_for('analytics') }}">View Analytics</a>
+                <a class="action-card" href="{{ url_for('forecast') }}">Demand Forecast</a>
+            </div>
+        </div>
+    </section>
+    <section class="medicines-grid">
+        <h2 style="grid-column: 1/-1; margin-top: 20px;">Available Medicines</h2>
+        {% for medicine in all_medicines %}
+        <div class="medicine-card">
+            <div class="medicine-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div style="font-size: 100px; line-height: 1;">{{ medicine.emoji }}</div>
+            </div>
+            <div class="medicine-info">
+                <h3>{{ medicine.name }}</h3>
+                <p class="category"><strong>Category:</strong> {{ medicine.category }}</p>
+                <p class="price"><strong>Price:</strong> ₹{{ '{:.2f}'.format(medicine.price) }}</p>
+                <p class="stock"><strong>Stock:</strong> {{ medicine.quantity }} units</p>
+                <div class="medicine-description">
+                    <h4>Uses:</h4>
+                    <p>{{ medicine.uses }}</p>
+                </div>
+                {% if medicine.description %}
+                <div class="medicine-details">
+                    <h4>About:</h4>
+                    <p>{{ medicine.description }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+
+<style>
+.medicines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.medicine-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.medicine-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.medicine-image {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5));
+    position: relative;
+}
+
+.medicine-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-placeholder {
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.7;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.medicine-info {
+    padding: 18px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.medicine-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.medicine-info h4 {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    font-size: 0.95em;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.medicine-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.medicine-description, .medicine-details {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.medicine-description p, .medicine-details p {
+    font-size: 0.85em;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+.category {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 0.85em;
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffd700;
+    margin: 5px 0;
+}
+
+.stock {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.9);
+}
+</style>
+{% endblock %}

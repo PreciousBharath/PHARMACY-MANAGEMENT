@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-auth auth-bg">
+    <div class="floatingPill" style="width:100px;height:100px;background:#4ade80;top:10%;right:12%;"></div>
+    <div class="floatingPill" style="width:90px;height:90px;background:#22d3ee;bottom:15%;right:5%;animation-delay:1s;"></div>
+    
+    <div class="auth-card animated-card">
+        <div class="pharmacy-badge">
+            <p style="font-size:0.85rem; margin:0; margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; color:var(--success);">New Registration</p>
+        </div>
+        
+        <h1 style="background:linear-gradient(135deg,var(--success),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:6px;">Join Our Team</h1>
+        <p style="text-align:center;font-size:1rem;margin-bottom:28px;font-weight:500;">Create your pharmacy account</p>
+        
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>👤</span>
+                    {{ form.username.label }}
+                </label>
+                {{ form.username(class='input-field', placeholder='Choose a username') }}
+            </div>
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>✉️</span>
+                    {{ form.email.label }}
+                </label>
+                {{ form.email(class='input-field', placeholder='Enter your email') }}
+            </div>
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>🔐</span>
+                    {{ form.password.label }}
+                </label>
+                {{ form.password(class='input-field', placeholder='Create a password') }}
+            </div>
+            
+            <div class="input-group">
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:500;color:var(--text);">
+                    <span>✓</span>
+                    {{ form.confirm.label }}
+                </label>
+                {{ form.confirm(class='input-field', placeholder='Confirm password') }}
+            </div>
+            
+            {{ form.submit(class='btn btn-primary btn-block', style='margin-top:20px;font-size:1.1rem;padding:16px;letter-spacing:0.5px;') }}
+        </form>
+        
+        <p class="small-text" style="margin-top:24px;">
+            Already have an account? <a href="{{ url_for('login') }}" style="color:var(--accent-2);text-decoration:none;font-weight:600;transition:all .3s ease;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const inputs = document.querySelectorAll('.input-field');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function(){
+                this.style.background = 'rgba(15, 23, 45, 0.95)';
+                this.style.borderColor = 'rgba(74, 222, 128, 0.6)';
+            });
+            input.addEventListener('blur', function(){
+                this.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                this.style.background = 'rgba(255, 255, 255, 0.04)';
+            });
+        });
+    });
+</script>
+{% endblock %}
