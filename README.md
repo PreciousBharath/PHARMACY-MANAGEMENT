@@ -30,17 +30,11 @@ A web-based pharmacy operations dashboard built with **Python, Flask, SQLite, an
 
 ## 📸 Screenshots
 
-No standalone application screenshots are currently stored in this repository. To keep this README accurate, screenshots have not been fabricated.
+<img width="1205" height="673" alt="p42" src="https://github.com/user-attachments/assets/f1cc6782-d9d0-4185-a63a-56912435afdb" />
 
-To add genuine screenshots, create a `docs/screenshots/` folder and save captures from the running application, for example:
+<img width="1361" height="674" alt="p43" src="https://github.com/user-attachments/assets/c10ead45-e502-45bd-8e0c-b3977a5b83e3" />
 
-- `docs/screenshots/login.png`
-- `docs/screenshots/dashboard.png`
-- `docs/screenshots/inventory.png`
-- `docs/screenshots/analytics.png`
-- `docs/screenshots/forecast.png`
 
-Then embed them here using relative Markdown image paths, such as `![Dashboard](docs/screenshots/dashboard.png)`.
 
 ## 🗂️ Project Structure
 
@@ -74,6 +68,8 @@ PHARMACY-MANAGEMENT/
 - A modern web browser
 
 ## 🚀 Run Locally
+<img width="1372" height="595" alt="p41" src="https://github.com/user-attachments/assets/951ff748-3ce0-43f1-845d-cd8ddc1b2d74" />
+
 
 ### 1. Clone the repository
 
